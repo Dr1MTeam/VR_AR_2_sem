@@ -7,5 +7,6 @@
 		- XR Plugin Management 4.4.0
 		- XR Hands 1.3.0
 		- Oculus XR Plugin 4.2.0
+		- Universal Render Pipeline 16.0.5
 		
 
