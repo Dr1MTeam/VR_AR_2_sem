@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.vr_ar_2_sem.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "C:\\Users\\Admin\\Downloads\\VR_AR_2_sem-location-feature\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "VR_AR_2_sem [Testing]"
+        }
+      }
+    }
+  ]
+}
