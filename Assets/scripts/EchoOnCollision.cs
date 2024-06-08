@@ -5,7 +5,7 @@ using UnityEngine;
 public class EchoOnCollision : MonoBehaviour
 {
     [SerializeField]
-    float threshold = 0.1f; // Пороговое значение, которое вы определяете
+    float threshold = 0.0f; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     private Rigidbody rb;
 
@@ -16,30 +16,52 @@ public class EchoOnCollision : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        // Сохраняем текущую скорость перед обновлением физики
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         previousVelocity = rb.velocity;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Получаем вектор скорости объекта и нормализуем его
-        Vector3 velocity = rb.velocity;
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
+        Vector3 velocity = previousVelocity;
         Vector3 normalizedVelocity = velocity.normalized;
 
-        // Получаем вектор нормали плоскости коллизии
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Vector3 collisionNormal = collision.contacts[0].normal;
 
-        // Вычисляем разность между нормализированным вектором скорости и вектором нормали плоскости коллизии
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Vector3 difference = normalizedVelocity + collisionNormal;
 
-        // Вычисляем модуль этой разности
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         float magnitudeDifference = difference.magnitude;
 
-        // Проверяем, меньше ли этот модуль определенного значения
+        Debug.Log(magnitudeDifference);
+
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (magnitudeDifference < threshold)
         {
-            // Вызовите вашу функцию здесь
-            // YourFunction();
+            SpawnTerrainScanner();
         }
+
+    }
+    public GameObject TerrainScannerprefab;
+    public float duration = 10;
+    public float size = 500;
+    void SpawnTerrainScanner()
+    {
+        GameObject terrainScanner = Instantiate(TerrainScannerprefab, gameObject.transform.position, Quaternion.identity) as GameObject;
+        ParticleSystem terrainScannerPS = terrainScanner.transform.GetChild(0).GetComponent<ParticleSystem>();
+
+        if (terrainScannerPS != null)
+        {
+            var main = terrainScannerPS.main;
+            main.startLifetime = duration;
+            main.startSize = size;
+        }
+        else
+            Debug.Log("First child doesnt have particle system");
+
+        Destroy(terrainScanner, duration + 1);
     }
 }

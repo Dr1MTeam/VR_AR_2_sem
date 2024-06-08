@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Valve.VR;
 
 public class EchoScanner : MonoBehaviour
 {
-    public GameObject TerrainScannerprefab;
+    public GameObject TerrainScannerprefab; 
     public float duration = 10;
     public float size = 500;
 
+        [SerializeField]
+     SteamVR_Action_Boolean echo = null;
 
  
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+
+        echo = SteamVR_Actions.default_Echo;
+        
+        if (echo.state)
         {
             SpawnTerrainScanner();
         }
