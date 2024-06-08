@@ -9,7 +9,6 @@ public class EchoScanner : MonoBehaviour
     public float size = 500;
 
 
- 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -18,7 +17,7 @@ public class EchoScanner : MonoBehaviour
         }
     }
 
-    void SpawnTerrainScanner    ()
+    public void SpawnTerrainScanner    ()
     {
         GameObject terrainScanner = Instantiate(TerrainScannerprefab, gameObject.transform.position, Quaternion.identity) as GameObject;
         ParticleSystem terrainScannerPS = terrainScanner.transform.GetChild(0).GetComponent<ParticleSystem>();
